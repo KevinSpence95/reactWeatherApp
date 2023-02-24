@@ -1,49 +1,6 @@
 import { useEffect, useState } from "react";
 import { APIKEY } from "./apikey";
-
-
-
-
-//Helper Functions
-function CtoF(celcius) {
-  return Math.round(celcius * (9 / 5) + 32);
-}
-const daysOfTheWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-function getWeekDay(dateStr) {
-  let date = new Date(dateStr);
-  return daysOfTheWeek[date.getDay()];
-}
-function findMode(arr) {
-  let mode = null;
-  let maxCount = 0;
-
-  // Count the frequency of each element in the array
-  const counts = {};
-  for (const item of arr) {
-    counts[item] = (counts[item] || 0) + 1;
-  }
-
-  // Find the element(s) with the highest frequency
-  for (const item in counts) {
-    if (counts[item] > maxCount) {
-      mode = item;
-      maxCount = counts[item];
-    }
-  }
-
-  return mode;
-}
-
-
-
+import { CtoF, getWeekDay, findMode } from "./helperFunctions";
 
 //Custom hook that fetches weather data for the app by location
 export default function useGetWeather(city, stateNameOrCountryCode = "") {
@@ -112,7 +69,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
           };
         });
         // console.log(cleanedForecast);
-        //---
+        
         let dayPrecipProbs = new Map();
         cleanedForecast.forEach((forecast) => {
           if (!dayPrecipProbs.has(forecast.weekday)) {
@@ -123,8 +80,9 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
             dayPrecipProbs.set(forecast.weekday, prev);
           }
         });
+
         // console.log(dayPrecipProbs);
-        //---
+    
         let dayIcons = new Map();
         cleanedForecast.forEach((forecast) => {
           if (!dayIcons.has(forecast.weekday)) {
@@ -137,13 +95,12 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         });
         // console.log(dayIcons);
 
-        let dayIcon = new Map()
-        dayIcons.forEach((val,key) => {
-            dayIcon.set(key,findMode(val))
-        })
+        let dayIcon = new Map();
+        dayIcons.forEach((val, key) => {
+          dayIcon.set(key, findMode(val));
+        });
         // console.log(dayIcon)
 
-        //
         let dayTemps = new Map();
         cleanedForecast.forEach((forecast) => {
           if (!dayTemps.has(forecast.weekday)) {
@@ -155,16 +112,13 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
           }
         });
         // console.log(dayTemps);
-//
+
         let dayMinMaxTemp = new Map();
 
         for (let [key, val] of dayTemps.entries()) {
-          let temps = val.length
-            let totalTemp = val.reduce(
-            (acc, curr) => acc + curr,
-            0
-          );
-          let avgTemp = totalTemp/temps;
+          let temps = val.length;
+          let totalTemp = val.reduce((acc, curr) => acc + curr, 0);
+          let avgTemp = totalTemp / temps;
           let minTemp = val.reduce(
             (prev, curr) => Math.max(prev, curr),
             -Infinity
@@ -173,33 +127,88 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
             (prev, curr) => Math.min(prev, curr),
             Infinity
           );
-          dayMinMaxTemp.set(key, [minTemp,avgTemp, maxTemp]);
+          dayMinMaxTemp.set(key, [minTemp, avgTemp, maxTemp]);
         }
 
         // console.log(dayMinMaxTemp);
 
-        let forecast = new Map()
+        let forecast5day = new Map();
 
-        dayMinMaxTemp.forEach((val,key) => {
+        dayMinMaxTemp.forEach((val, key) => {
+          let minTempF = CtoF(val[0]);
+          let avgTempF = CtoF(val[1]);
+          let maxTempF = CtoF(val[2]);
+          let obj = {
+            icon: dayIcon.get(key),
+            precipProb: dayPrecipProbs
+              .get(key)
+              .reduce((prev, curr) => Math.max(prev, curr), -Infinity),
+            minTempC: val[0],
+            avgTempC: val[1],
+            maxTempC: val[2],
+            minTempF,
+            avgTempF,
+            maxTempF,
+          };
+          forecast5day.set(key, obj);
+        });
 
-            let minTempF = CtoF(val[0])
-            let avgTempF = CtoF(val[1])
-            let maxTempF = CtoF(val[2])
-            let obj = {
-                icon: dayIcon.get(key),
-                precipProb : dayPrecipProbs.get(key).reduce((prev,curr)=> Math.max(prev,curr), -Infinity),
-                minTempC: val[0],
-                avgTempC: val[1],
-                maxTempC: val[2],
+        //check if 5day forcast Map is of size 6. if so, set the first entry of the Map to have a value that considers both the current data and the 5 day forecast data for the rest of today (lowest lowTemp, highest highTemp, highest precipProb, and average of current temp and the avgTemp from the 5day)
+        let firstPass = true;
+        if (forecast5day.size > 5) {
+          //Assuming map size of 6
+          //replace the first entry with an entry with a today key with data that considers current data and 5 day forecast data for the rest of the current day
+          forecast5day.forEach((val, key) => {
+            if (firstPass) {
+              let currLowTempC = Math.round(weatherData.main.temp_min - 273.15);
+              let currHighTempC = Math.round(
+                weatherData.main.temp_max - 273.15
+              );
+              let currTemp = Math.round(weatherData.main.temp - 273.15);
+              let low5dayTempC = val.lowTempC;
+              let high5dayTempC = val.highTempC;
+              let avg5dayTempC = val.avgTempC;
+
+              let minTempC = Math.min(currLowTempC, low5dayTempC);
+              let avgTempC = (currTemp + avg5dayTempC) / 2;
+              let maxTempC = Math.max(currHighTempC, high5dayTempC);
+              let minTempF = CtoF(minTempC);
+              let avgTempF = CtoF(avgTempC);
+              let maxTempF = CtoF(maxTempC);
+              forecast5day.set("Today", {
+                ...val,
+                minTempC,
+                avgTempC,
+                maxTempC,
                 minTempF,
                 avgTempF,
-                maxTempF
-
+                maxTempF,
+              });
+              forecast5day.delete(key);
+              firstPass = false; //so this only happens once on the first element
             }
-            forecast.set(key,obj)
-        })
-        // console.log('----')
-        // console.log(forecast)
+          });
+        } else {
+          //Assuming map size of 5
+          //add a Today key to the 5day forecase with the value of just the current days data
+          forecast5day.set("Today", {
+            icon: weatherData.weather[0].icon,
+            precipProb: weatherData.weather[0].description.match(
+              /rain|drizzle|snow|sleet/i
+            )
+              ? 1
+              : 0, //0 or 1 depending on whether the current weather description includes rain, drizzle, snow, sleet
+            minTempC: Math.round(weatherData.main.temp_min - 273.15),
+            avgTempC: Math.round(weatherData.main.temp - 273.15),
+            maxTempC: Math.round(weatherData.main.temp_max - 273.15),
+            minTempF: CtoF(Math.round(weatherData.main.temp_min - 273.15)),
+            avgTempF: CtoF(Math.round(weatherData.main.temp - 273.15)),
+            maxTempF: CtoF(Math.round(weatherData.main.temp_max - 273.15)),
+          });
+          firstPass = false;
+        }
+
+        //-------------------------------------
 
         //bundle the data together
         let tempF = CtoF(weatherData.main.temp - 273.15);
@@ -213,8 +222,9 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
           weather: weatherData.weather[0].main,
           weatherDescription: weatherData.weather[0].description,
           icon: weatherData.weather[0].icon,
-          percentCloudy: weatherData.clouds.all,
+        //   percentCloudy: weatherData.clouds.all,
           humidity: weatherData.main.humidity,
+          visibilityKM: Math.round(weatherData.visibility / 1000),
           tempF,
           feelsLikeF,
           lowTempF,
@@ -225,7 +235,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
           lowTempC: Math.round(weatherData.main.temp_min - 273.15),
           highTempC: Math.round(weatherData.main.temp_max - 273.15),
           windSpeedMPS: weatherData.wind.speed,
-          forecast
+          forecast5day,
         };
         console.log(weather);
         setWeatherData(weather);
