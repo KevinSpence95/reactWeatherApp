@@ -216,6 +216,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         let lowTempF = CtoF(weatherData.main.temp_min - 273.15);
         let highTempF = CtoF(weatherData.main.temp_max - 273.15);
         let windSpeedMPH = Math.round(weatherData.wind.speed * 2.23694); //to get speed from m/s to mph
+        let visibilityMI = (windSpeedMPH * 1.609).toFixed(1);
         let weather = {
           city,
           stateNameOrCountryCode,
@@ -225,6 +226,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         //   percentCloudy: weatherData.clouds.all,
           humidity: weatherData.main.humidity,
           visibilityKM: Math.round(weatherData.visibility / 1000),
+          visibilityMI,
           tempF,
           feelsLikeF,
           lowTempF,

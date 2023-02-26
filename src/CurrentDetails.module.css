@@ -1,0 +1,21 @@
+.currentDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.currentDetails > * {
+    background-color: var(--stormtrans);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:1rem;
+}
+
+svg {
+    transform: scale(1.5);
+    margin-bottom: .5rem;
+}
