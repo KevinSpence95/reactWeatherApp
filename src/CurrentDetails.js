@@ -6,6 +6,7 @@ export default function CurrentDetails({ windSpeedMPH, windSpeedMPS, feelsLikeC,
             <div className="visibility">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 <h3>{metric ? visibilityKM : visibilityMI} {metric ? 'km' : 'mi'}</h3> 
+                <h5>Visibility</h5> 
             </div>
             <div className="windFeel">
                 <div className="wind">
@@ -15,8 +16,9 @@ export default function CurrentDetails({ windSpeedMPH, windSpeedMPS, feelsLikeC,
                 <h5>Feels {metric ? feelsLikeC : feelsLikeF}{metric ? "°C" : " °F"}</h5>
             </div>
             <div className="humidity">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-droplet"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
-                <h3>{humidity}% Humidity</h3> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-droplet"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <h3>{humidity}%</h3> 
+                <h5>Humidity</h5> 
             </div>
         </div>
     )

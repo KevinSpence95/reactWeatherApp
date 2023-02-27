@@ -5,12 +5,9 @@
   --bluesky: #73d7ff;
   --rainyday: #19bdff;
   --storm: #004764;
-
-
   --orangesun: hsl(13, 81%, 61%);
   --orangesunlight: hsl(13, 81%, 67%);
   --stormtrans: rgba(0, 71, 100, 0.5);
-
   --dayTimeGradient: radial-gradient(
     ellipse at 100% 0%,
     rgba(255, 255, 255, 1) 0%,
@@ -19,8 +16,11 @@
     var(--rainyday) 75%,
     var(--storm) 100%
   );
-
-  font-size: calc(10px + 2vmin);
+}
+html {
+  background: var(--dayTimeGradient);
+  background-size: 150%;
+  height: 100%;
 }
 
 * {
@@ -30,20 +30,36 @@
   letter-spacing: 1px;
 }
 
+body {
+  font-size: min(max(1rem, 4vw), 1.2rem);
+  /* min-height:100vh; */
+  height: 100%;
+}
+
+h1 {
+  font-size: min(max(2rem, 6vw), 2.4rem);
+}
+
+h2 {
+  font-size: min(max(1.5rem, 5vw), 1.8rem);
+}
+
+h3 {
+  font-size: min(max(1.2rem, 4vw), 1.5rem);
+}
+
+h4 {
+  font-size: min(max(1rem, 3vw), 1.2rem);
+}
+
+h5 {
+  font-size: min(max(0.9rem, 2.5vw), 1rem);
+}
+
 .weatherApp {
-  min-height: 100vh;
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(185, 235, 255, 1) 25%,
-    rgba(115, 215, 255, 1) 50%,
-    rgba(25, 189, 255, 1) 75%,
-    rgba(0, 71, 100, 1) 100%
-  );
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 5vh;
   color: white;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -51,7 +67,8 @@
 
 /*style the user inputs*/
 .userInputs {
-  margin: 1rem;
+  padding: 1rem;
+  width: 50%;
   display: grid;
   grid-template-columns: 23% 54% 23%;
 }
@@ -60,24 +77,20 @@
   border: 2px solid var(--orangesun);
   border-right: none;
   border-left: none;
-  font-size: .75rem;
-  
 }
 .userInputs input:focus {
-  outline:none;
-  border:2px solid var(--storm);
+  outline: none;
+  border: 2px solid var(--storm);
 }
 .userInputs button {
   padding: 0.5rem;
-  font-size: .75rem;
-  border:none;
-  color:white;
+  border: none;
+  color: white;
   background-color: var(--orangesun);
-  
 }
 .userInputs button:focus {
-  outline:none;
-  border:2px solid var(--storm);
+  outline: none;
+  border: 2px solid var(--storm);
 }
 .userInputs button:hover {
   background-color: var(--orangesunlight);
@@ -97,38 +110,55 @@
 .currentWeather {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  text-align: center;
-  border: 3px solid var(--storm);
-  border-radius: 1rem;
-  padding: 1rem;
-}
-
-.currentTemp {
-  font-size: 3rem;
-}
-.mainDisplay {
-  display: flex;
   justify-content: center;
   align-items: center;
-}
-.weatherGroup{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.mainDisplay {
-  width:100%;
   /* background-color: pink; */
 }
+.mainDisplay {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  place-items: center;
+  /* background-color: chartreuse; */
+}
+.mainDisplay > * {
+  /* background-color: blueviolet; */
+  display: flex;
+  align-items: center;
+}
+.currentTemp {
+  justify-self: flex-end;
+  margin-right:1rem;
+  transform: scale(1.5);
+}
+.weatherGroup {
+  display: flex;
+}
 .mainDisplay img {
-  width:6rem;
-  margin-left: auto;
+  width: 135px;
+  height: 135px;
 }
-.mainDisplay .currentTemp {
-  margin-left: 2rem;
+.weatherGroupText {
+  text-align: left;
 }
-.mainDisplay .weatherGroup {
-  margin-right:2rem;
+
+
+/* When the browser is less than 639px wide */
+@media screen and (max-width: 639px) {
+  .userInputs {
+    width: 90%;
+    margin: 0.25rem;
+  }
+  .mainDisplay img {
+    width: 90px;
+    height:90px;
+  }
+  .currentTemp {
+    transform: scale(1);
+  }
+  .weatherGroupText {
+    transform: scale(.8);
+  }
+  .mainDisplay {
+    grid-template-columns: 38% 62%;
+  }
 }

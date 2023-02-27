@@ -10,12 +10,29 @@
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding:1rem;
+}
+
+.humidity {
+    display: flex;
+    flex-direction: column;
 }
 
 svg {
     transform: scale(1.5);
     margin-bottom: .5rem;
+}
+
+/* When the browser is less than 639px wide */
+@media screen and (max-width: 639px) {
+
+    .currentDetails {
+        gap:.25rem;
+        margin-top: 0;
+    }
+    svg {
+        transform: scale(1);
+    }
 }

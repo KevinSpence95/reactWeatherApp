@@ -26,7 +26,7 @@ function App() {
   let weatherData = useGetWeather(...location);
 
   return (
-    <div className="weatherApp">
+    <body className="weatherApp">
       <section className="userInputs">
         <button
           type="button"
@@ -49,18 +49,22 @@ function App() {
       <div className="weatherDisplay">
         <section className="currentWeather">
           <div className="mainDisplay">
-          <h1 className="currentTemp">
-            {metric ? weatherData.tempC : weatherData.tempF}
-            {metric ? "°C" : " °F"}
-          </h1>
-            <img
-              src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
-              alt={`${weatherData.weather} icon`}
-            />
-          <div className="weatherGroup">
-            <h2>{weatherData.weather}</h2>
-            <h3>{weatherData.weatherDescription}</h3>
-          </div>
+            <h1 className="currentTemp">
+              {metric ? weatherData.tempC : weatherData.tempF}
+              {metric ? "°C" : " °F"}
+            </h1>
+            <div className="weatherGroup">
+              <img
+                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                alt={`${weatherData.weather} icon`}
+              />
+              <div className="weatherGroupText">
+                <h2>{weatherData.weather}</h2>
+                <h3>
+                  {weatherData.weatherDescription}
+                </h3>
+              </div>
+            </div>
           </div>
 
           <CurrentDetails
@@ -77,7 +81,7 @@ function App() {
 
         <Forecast />
       </div>
-    </div>
+    </body>
   );
 }
 
