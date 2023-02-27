@@ -161,12 +161,10 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
           forecast5day.forEach((val, key) => {
             if (firstPass) {
               let currLowTempC = Math.round(weatherData.main.temp_min - 273.15);
-              let currHighTempC = Math.round(
-                weatherData.main.temp_max - 273.15
-              );
+              let currHighTempC = Math.round(weatherData.main.temp_max - 273.15);
               let currTemp = Math.round(weatherData.main.temp - 273.15);
-              let low5dayTempC = val.lowTempC;
-              let high5dayTempC = val.highTempC;
+              let low5dayTempC = val.minTempC;
+              let high5dayTempC = val.maxTempC;
               let avg5dayTempC = val.avgTempC;
 
               let minTempC = Math.min(currLowTempC, low5dayTempC);
@@ -183,6 +181,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
                 minTempF,
                 avgTempF,
                 maxTempF,
+                secret: 'yeloha'
               });
               forecast5day.delete(key);
               firstPass = false; //so this only happens once on the first element

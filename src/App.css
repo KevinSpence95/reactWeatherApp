@@ -30,7 +30,7 @@ html {
   letter-spacing: 1px;
 }
 
-body {
+#app-body {
   font-size: min(max(1rem, 4vw), 1.2rem);
   /* min-height:100vh; */
   height: 100%;
@@ -116,7 +116,7 @@ h5 {
 }
 .mainDisplay {
   display: grid;
-  grid-template-columns: 42% 58%;
+  grid-template-columns: 35% 65%;
   place-items: center;
   /* background-color: chartreuse; */
 }
@@ -140,7 +140,6 @@ h5 {
 .weatherGroupText {
   text-align: left;
 }
-
 
 /* When the browser is less than 639px wide */
 @media screen and (max-width: 639px) {

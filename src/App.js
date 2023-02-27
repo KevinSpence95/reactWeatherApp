@@ -26,7 +26,7 @@ function App() {
   let weatherData = useGetWeather(...location);
 
   return (
-    <body className="weatherApp">
+    <div className="weatherApp" id = 'app-body'>
       <section className="userInputs">
         <button
           type="button"
@@ -81,7 +81,7 @@ function App() {
 
         <Forecast />
       </div>
-    </body>
+    </div>
   );
 }
 
