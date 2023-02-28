@@ -26,7 +26,7 @@ function App() {
   let weatherData = useGetWeather(...location);
 
   return (
-    <div className="weatherApp" id = 'app-body'>
+    <div className="weatherApp" id="app-body">
       <section className="userInputs">
         <button
           type="button"
@@ -60,9 +60,7 @@ function App() {
               />
               <div className="weatherGroupText">
                 <h2>{weatherData.weather}</h2>
-                <h3>
-                  {weatherData.weatherDescription}
-                </h3>
+                <h3>{weatherData.weatherDescription}</h3>
               </div>
             </div>
           </div>
@@ -79,7 +77,7 @@ function App() {
           />
         </section>
 
-        <Forecast />
+        <Forecast forecast={weatherData.forecast5day} />
       </div>
     </div>
   );

@@ -127,7 +127,7 @@ h5 {
 }
 .currentTemp {
   justify-self: flex-end;
-  margin-right:1rem;
+  margin-right:2rem;
   transform: scale(1.5);
 }
 .weatherGroup {
@@ -153,9 +153,10 @@ h5 {
   }
   .currentTemp {
     transform: scale(1);
+    margin-right: 1rem;
   }
   .weatherGroupText {
-    transform: scale(.8);
+    transform: scale(.8) translateX(-20px);
   }
   .mainDisplay {
     grid-template-columns: 38% 62%;

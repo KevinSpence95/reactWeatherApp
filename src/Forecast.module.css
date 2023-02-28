@@ -1,0 +1,51 @@
+.forecastGrid,
+.forecastGridHeader {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  border-bottom:1px solid var(--stormtrans);
+}
+
+.forecastGridHeader {
+    margin: 1rem 0 0 0;
+    height:60px;
+    
+}
+
+.forecastGrid {
+    border-bottom:1px solid var(--stormtrans);
+}
+
+.forecastColumn {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  align-items: center;
+}
+
+.iconContainer {
+  display: grid;
+  grid-template-rows: 60% 40%;
+  justify-items: center;
+  position: relative;
+  height: 60px;
+}
+
+.chanceOfRain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.normalIcon {
+  height: 3.5rem;
+}
+
+.shrunkIcon {
+  height: 3rem;
+  transform: translateY(-4px);
+}
+
+.lowIcon, .avgIcon, .highIcon {
+
+}
