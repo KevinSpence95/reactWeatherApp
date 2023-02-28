@@ -1,20 +1,26 @@
+.forecastWrapper {
+    background-color: var(--stormtrans);
+    padding: 0 .5rem .5rem .5rem;
+    border-radius: 1rem;
+}
+
 .forecastGrid,
 .forecastGridHeader {
   display: grid;
   grid-template-columns: 2.5fr 1fr 1fr 1fr;
   align-items: center;
   width: 100%;
-  border-bottom:1px solid var(--stormtrans);
 }
 
 .forecastGridHeader {
+    border-bottom:1px solid var(--storm);
     margin: 1rem 0 0 0;
     height:60px;
     
 }
 
 .forecastGrid {
-    border-bottom:1px solid var(--stormtrans);
+    /* border-bottom:1px solid var(--stormtrans); */
 }
 
 .forecastColumn {
@@ -44,8 +50,4 @@
 .shrunkIcon {
   height: 3rem;
   transform: translateY(-4px);
-}
-
-.lowIcon, .avgIcon, .highIcon {
-
 }

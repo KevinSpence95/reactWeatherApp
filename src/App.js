@@ -25,8 +25,15 @@ function App() {
 
   let weatherData = useGetWeather(...location);
 
+  // let countryName = weatherData.stateNameOrCountryCode.length > 2 ? weatherData.stateNameOrCountryCode[0].toUpperCase() : weatherData.stateNameOrCountryCode;
+// let firstLet = weatherData.stateNameOrCountryCode && weatherData.stateNameOrCountryCode[0].toUpperCase();
+// let restCountry = weatherData.stateNameOrCountryCode.slice(1)
+
   return (
-    <div className="weatherApp" id="app-body">
+    <div
+      className={`weatherApp ${!weatherData.daytime && "night"}`}
+      id="app-body"
+    >
       <section className="userInputs">
         <button
           type="button"
@@ -38,13 +45,19 @@ function App() {
         </button>
         <input type="text" placeholder="City, State/CC" onChange={getInputs} />
         <button type="submit" onClick={changeLocation}>
-          Change Location
+          Change Loc
         </button>
       </section>
 
       <h1 className="location">
-        {weatherData.city}, {weatherData.stateNameOrCountryCode}
+        {weatherData.city}
+        , {weatherData.stateNameOrCountryCode}
       </h1>
+      {/* <h1 className="location">
+        {weatherData.city &&
+          weatherData.city[0] + weatherData.city.slice(1).toLowerCase()}
+        , {weatherData.stateNameOrCountryCode && countryName}
+      </h1> */}
 
       <div className="weatherDisplay">
         <section className="currentWeather">
@@ -77,7 +90,7 @@ function App() {
           />
         </section>
 
-        <Forecast forecast={weatherData.forecast5day} />
+        <Forecast forecast={weatherData.forecast5day} metric={metric} />
       </div>
     </div>
   );

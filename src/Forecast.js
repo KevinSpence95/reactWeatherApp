@@ -1,5 +1,5 @@
 import styles from "./Forecast.module.css";
-export default function Forecast({ forecast }) {
+export default function Forecast({ forecast, metric }) {
   return (
     <div className={styles.forecastWrapper}>
       <div className={styles.forecastGridHeader}>
@@ -53,13 +53,13 @@ export default function Forecast({ forecast }) {
                 )}
               </div>
               <div className="lowColumn" style={{justifySelf:'center'}}>
-                <h5>{day[1].minTempF}</h5>
+                <h5>{metric ? day[1].minTempC : day[1].minTempF}</h5>
               </div>
               <div className="avgColumn" style={{justifySelf:'center'}}>
-                <h5>{day[1].avgTempF}</h5>
+                <h5>{metric ? day[1].avgTempC : day[1].avgTempF}</h5>
               </div>
               <div className="highColumn" style={{justifySelf:'center'}}>
-                <h5>{day[1].maxTempF}</h5>
+                <h5>{metric ? day[1].maxTempC : day[1].maxTempF}</h5>
               </div>
             </div>
           );

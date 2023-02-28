@@ -97,7 +97,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         dayIcons.forEach((val, key) => {
           dayIcon.set(key, findMode(val));
         });
-        let dayIconsAlts = new Map() 
+        let dayIconsAlts = new Map();
         cleanedForecast.forEach((forecast) => {
           if (!dayIconsAlts.has(forecast.weekday)) {
             dayIconsAlts.set(forecast.weekday, [forecast.iconAlt]);
@@ -107,7 +107,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
             dayIconsAlts.set(forecast.weekday, prev);
           }
         });
-        let dayIconAlts = new Map()
+        let dayIconAlts = new Map();
         dayIconsAlts.forEach((val, key) => {
           dayIconAlts.set(key, findMode(val));
         });
@@ -127,14 +127,15 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         let dayMinMaxTemp = new Map();
 
         for (let [key, val] of dayTemps.entries()) {
+          // console.log(val)
           let temps = val.length;
           let totalTemp = val.reduce((acc, curr) => acc + curr, 0);
-          let avgTemp = totalTemp / temps;
-          let minTemp = val.reduce(
+          let avgTemp = Math.round(totalTemp / temps);
+          let maxTemp = val.reduce(
             (prev, curr) => Math.max(prev, curr),
             -Infinity
           );
-          let maxTemp = val.reduce(
+          let minTemp = val.reduce(
             (prev, curr) => Math.min(prev, curr),
             Infinity
           );
@@ -221,38 +222,42 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         }
 
         //turn it into a map for easy iteration
-        let forecast5dayArr = [...forecast5day]
-        let today = forecast5dayArr.pop()
-        forecast5dayArr.unshift(today)
+        let forecast5dayArr = [...forecast5day];
+        let today = forecast5dayArr.pop();
+        forecast5dayArr.unshift(today);
         //-------------------------------------
 
         //bundle the data together
         let tempF = CtoF(weatherData.main.temp - 273.15);
         let feelsLikeF = CtoF(weatherData.main.feels_like - 273.15);
-        // let lowTempF = CtoF(weatherData.main.temp_min - 273.15);
-        // let highTempF = CtoF(weatherData.main.temp_max - 273.15);
         let windSpeedMPH = Math.round(weatherData.wind.speed * 2.23694); //to get speed from m/s to mph
         let visibilityMI = (weatherData.visibility / 1609).toFixed(1);
+        let cityFormatted = city.split(' ').map((word) => word[0] + word.slice(1).toLowerCase()).join(' ');
+        // let cityFormatted = city[0].toUpperCase() + city.slice(1).toLowerCase()
         let weather = {
-          city,
-          stateNameOrCountryCode,
+          city: cityFormatted,
+          stateNameOrCountryCode:
+            stateNameOrCountryCode.trim().length > 2
+              ? `${stateNameOrCountryCode
+                  .trim()
+                  .at(0)
+                  .toUpperCase()}${stateNameOrCountryCode
+                  .trim()
+                  .slice(1)
+                  .toLowerCase()}`
+              : stateNameOrCountryCode,
           weather: weatherData.weather[0].main,
           weatherDescription: weatherData.weather[0].description,
           icon: weatherData.weather[0].icon,
           daytime: weatherData.weather[0].icon.match(/d/i) ? true : false,
-          //   percentCloudy: weatherData.clouds.all,
           humidity: weatherData.main.humidity,
           visibilityKM: Math.round(weatherData.visibility / 1000),
           visibilityMI,
           tempF,
           feelsLikeF,
-          // lowTempF,
-          // highTempF,
           windSpeedMPH,
           tempC: Math.round(weatherData.main.temp - 273.15),
           feelsLikeC: Math.round(weatherData.main.feels_like - 273.15),
-          // lowTempC: Math.round(weatherData.main.temp_min - 273.15),
-          // highTempC: Math.round(weatherData.main.temp_max - 273.15),
           windSpeedMPS: weatherData.wind.speed,
           forecast5day: forecast5dayArr,
         };
