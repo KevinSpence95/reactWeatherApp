@@ -5,8 +5,8 @@ import useGetWeather from "./useGetWeather";
 import { useState } from "react";
 
 function App() {
-  let [inputs, setInputs] = useState([]);
-  let [location, setLocation] = useState(["Columbus", "Ohio"]); //TODO: use geolocation api to set the initial loaction
+  let [inputs, setInputs] = useState("");
+  let [location, setLocation] = useState(["Columbus", "Ohio"]);
   let [metric, setMetric] = useState(false);
 
   function getInputs(e) {
@@ -19,15 +19,19 @@ function App() {
 
   function changeLocation(e) {
     e.preventDefault();
-    if (inputs.length !== 2) return;
-    setLocation(inputs);
+    if (typeof inputs[0] === "undefined" || typeof inputs[1] === "undefined") {
+      console.log("try again");
+      alert(
+        "Please enter a valid input...\n\nValid Input Format:\n Beijing, CN\n Las vegas, Nevada\n\nMake sure to include a comma!"
+      );
+    } else {
+      console.log("esketit");
+      setLocation([...inputs]);
+      setInputs("");
+    }
   }
 
   let weatherData = useGetWeather(...location);
-
-  // let countryName = weatherData.stateNameOrCountryCode.length > 2 ? weatherData.stateNameOrCountryCode[0].toUpperCase() : weatherData.stateNameOrCountryCode;
-// let firstLet = weatherData.stateNameOrCountryCode && weatherData.stateNameOrCountryCode[0].toUpperCase();
-// let restCountry = weatherData.stateNameOrCountryCode.slice(1)
 
   return (
     <div
@@ -50,8 +54,7 @@ function App() {
       </section>
 
       <h1 className="location">
-        {weatherData.city}
-        , {weatherData.stateNameOrCountryCode}
+        {weatherData.city}, {weatherData.stateNameOrCountryCode}
       </h1>
       {/* <h1 className="location">
         {weatherData.city &&

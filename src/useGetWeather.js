@@ -41,6 +41,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         }
 
         let weatherData = await response2.json();
+        console.log(weatherData)
 
         //get 5 day / 3 hour forcast data
         //https://openweathermap.org/forecast5
@@ -69,6 +70,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
             precipProb: dataPoint.pop,
           };
         });
+        
 
         let dayPrecipProbs = new Map();
         cleanedForecast.forEach((forecast) => {
@@ -232,13 +234,15 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         let feelsLikeF = CtoF(weatherData.main.feels_like - 273.15);
         let windSpeedMPH = Math.round(weatherData.wind.speed * 2.23694); //to get speed from m/s to mph
         let visibilityMI = (weatherData.visibility / 1609).toFixed(1);
-        let cityFormatted = city.split(' ').map((word) => word[0] + word.slice(1).toLowerCase()).join(' ');
+        // let cityFormatted = city.split(' ').map((word) => word[0] + word.slice(1).toLowerCase()).join(' ');
         // let cityFormatted = city[0].toUpperCase() + city.slice(1).toLowerCase()
         let weather = {
-          city: cityFormatted,
+          city: weatherData.name,
+          stateNameOrCountryCode: weatherData.sys.country,
+          /*
           stateNameOrCountryCode:
             stateNameOrCountryCode.trim().length > 2
-              ? `${stateNameOrCountryCode
+              '? `${stateNameOrCountryCode
                   .trim()
                   .at(0)
                   .toUpperCase()}${stateNameOrCountryCode
@@ -246,6 +250,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
                   .slice(1)
                   .toLowerCase()}`
               : stateNameOrCountryCode,
+          */
           weather: weatherData.weather[0].main,
           weatherDescription: weatherData.weather[0].description,
           icon: weatherData.weather[0].icon,
@@ -265,7 +270,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         setWeatherData(weather);
       } catch (e) {
         console.log(e);
-        alert(e);
+        // alert(e);
       }
     }
     getWeather();
