@@ -12,7 +12,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         //get lat and lon coordinates of city, state/CC
         //https://openweathermap.org/api/geocoding-api
         let response = await fetch(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${city},${stateNameOrCountryCode}&limit=1&appid=${APIKEY}`
+          `https://api.openweathermap.org/geo/1.0/direct?q=${city},${stateNameOrCountryCode}&limit=1&appid=${APIKEY}`
         );
 
         if (!response.ok) {
