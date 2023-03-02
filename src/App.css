@@ -7,7 +7,6 @@
   --storm: #004764;
   --stormlight: hsl(197, 100%, 30%);
   --orangesun: hsl(13, 81%, 61%);
-  /* --orangesunlight: hsl(13, 81%, 67%); */
   --stormtrans: rgba(0, 71, 100, 0.4);
   --dayTimeGradient: radial-gradient(
     ellipse at 100% 0%,
@@ -17,7 +16,8 @@
     var(--rainyday) 75%,
     var(--storm) 100%
   );
-  --nightTimeGradient: linear-gradient(180deg, rgba(255, 183, 77, 1) 0%, rgba(255, 152, 0, 1) 50%, rgba(230, 81, 0, 1) 100%);
+  /* --nightTimeGradient: linear-gradient(180deg, rgba(255, 183, 77, 1) 0%, rgba(255, 152, 0, 1) 50%, rgba(230, 81, 0, 1) 100%); */
+  --nightTimeGradient: linear-gradient(to top right, #03001e, #7303c0, #ec38bc);
 }
 html {
   background: var(--dayTimeGradient);
@@ -34,14 +34,12 @@ html {
 
 #app-body {
   font-size: min(max(1rem, 4vw), 1.2rem);
-  /* min-height:100vh; */
   height: 100%;
 }
 /* When the browser is greater than 836px tall */
 @media screen and (min-height: 836px) {
   #app-body {
     font-size: min(max(1rem, 4vw), 1.2rem);
-    /* min-height:100vh; */
     height: 100vh;
   }
 }
@@ -94,18 +92,16 @@ h5 {
 .userInputs input:focus {
   outline: none;
   border: 2px solid black ;
-  /* background-color: var(--stormlight); */
 }
 .userInputs button {
   padding: 0.5rem;
   border: none;
   color: white;
   background-color: var(--storm);
-  transition: background-color 300ms ease
+  transition: background-color 300ms ease;
 }
 .userInputs button:focus {
   outline: none;
-  /* border: 2px solid var(--orangesun) ; */
   background-color: var(--stormlight);
 }
 .userInputs button:hover {
@@ -128,16 +124,13 @@ h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: pink; */
 }
 .mainDisplay {
   display: grid;
   grid-template-columns: 35% 65%;
   place-items: center;
-  /* background-color: chartreuse; */
 }
 .mainDisplay > * {
-  /* background-color: blueviolet; */
   display: flex;
   align-items: center;
 }

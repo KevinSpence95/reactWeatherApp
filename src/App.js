@@ -9,14 +9,10 @@ function App() {
   let [location, setLocation] = useState(["Columbus", "Ohio"]);
   let [metric, setMetric] = useState(false);
 
-  function getInputs(e) {
-    let cleanedInput = [
-      e.target.value.toUpperCase().split(",")[0],
-      e.target.value.toUpperCase().split(",")[1],
-    ];
-    setInputs(cleanedInput);
+  function handleKeyPress() {
+    setLocation([inputs.split(",")[0], inputs.split(",")[1]]);
+    setInputs("");
   }
-
   function changeLocation(e) {
     e.preventDefault();
     if (typeof inputs[0] === "undefined" || typeof inputs[1] === "undefined") {
@@ -24,9 +20,9 @@ function App() {
       alert(
         "Please enter a valid input...\n\nValid Input Format:\n Beijing, CN\n Las vegas, Nevada\n\nMake sure to include a comma!"
       );
+      setInputs("");
     } else {
-      console.log("esketit");
-      setLocation([...inputs]);
+      setLocation([inputs.split(",")[0], inputs.split(",")[1]]);
       setInputs("");
     }
   }
@@ -47,7 +43,18 @@ function App() {
         >
           {metric ? "Show Imperial" : "Show Metric"}
         </button>
-        <input type="text" placeholder="City, State/CC" onChange={getInputs} />
+        <input
+          type="text"
+          value={inputs}
+          placeholder="City, State/CC"
+          onChange={(e) => {
+            setInputs(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            e.key === "Enter" &&
+              handleKeyPress()
+          }}
+        />
         <button type="submit" onClick={changeLocation}>
           Change Loc
         </button>
@@ -56,11 +63,6 @@ function App() {
       <h1 className="location">
         {weatherData.city}, {weatherData.stateNameOrCountryCode}
       </h1>
-      {/* <h1 className="location">
-        {weatherData.city &&
-          weatherData.city[0] + weatherData.city.slice(1).toLowerCase()}
-        , {weatherData.stateNameOrCountryCode && countryName}
-      </h1> */}
 
       <div className="weatherDisplay">
         <section className="currentWeather">

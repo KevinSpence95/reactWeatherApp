@@ -3,10 +3,10 @@ export default function Forecast({ forecast, metric }) {
   return (
     <div className={styles.forecastWrapper}>
       <div className={styles.forecastGridHeader}>
-      <h5>Forecast</h5>
-      <h5 style={{justifySelf:'center'}}>Low</h5>
-      <h5 style={{justifySelf:'center'}}>Avg</h5>
-      <h5 style={{justifySelf:'center'}}>High</h5>
+        <h5 style={{ paddingLeft: "1.5rem" }}>Forecast</h5>
+        <h5 style={{ justifySelf: "center" }}>Low</h5>
+        <h5 style={{ justifySelf: "center" }}>Avg</h5>
+        <h5 style={{ justifySelf: "center" }}>High</h5>
       </div>
       {forecast &&
         forecast.map((day, i) => {
@@ -52,13 +52,13 @@ export default function Forecast({ forecast, metric }) {
                   </div>
                 )}
               </div>
-              <div className="lowColumn" style={{justifySelf:'center'}}>
+              <div className="lowColumn" style={{ justifySelf: "center" }}>
                 <h5>{metric ? day[1].minTempC : day[1].minTempF}</h5>
               </div>
-              <div className="avgColumn" style={{justifySelf:'center'}}>
+              <div className="avgColumn" style={{ justifySelf: "center" }}>
                 <h5>{metric ? day[1].avgTempC : day[1].avgTempF}</h5>
               </div>
-              <div className="highColumn" style={{justifySelf:'center'}}>
+              <div className="highColumn" style={{ justifySelf: "center" }}>
                 <h5>{metric ? day[1].maxTempC : day[1].maxTempF}</h5>
               </div>
             </div>
