@@ -30,6 +30,8 @@
 html {
   background: var(--dayTimeGradient);
   background-size: 140%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #app-body {
