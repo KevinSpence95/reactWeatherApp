@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div
-      className={`weatherApp ${!weatherData.daytime && "night"}`}
+      className={`${!weatherData.daytime && "night"}`}
       id="app-body"
     >
       <section className="userInputs">
