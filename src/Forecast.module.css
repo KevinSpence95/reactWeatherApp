@@ -20,7 +20,7 @@
 }
 
 .forecastColumn {
-  padding-left: 1.5rem;
+  padding-left: 1.35rem;
   display: grid;
   grid-template-columns: 30% 70%;
   align-items: center;
@@ -53,9 +53,9 @@
   transform: translateY(-4px);
 }
 
-.lowColumn, .avgColumn, .highColumn {
- justify-self:  left;
-}
+/* .lowColumn, .avgColumn, .highColumn {
+ justify-self:  right;
+} */
 
 /* When the browser is less than 639px wide */
 @media screen and (max-width: 639px) {
@@ -64,6 +64,9 @@
   }
   .forecastGridHeader {
     margin-top: .2rem;
+  }
+  .forecastColumn {
+    padding-left: 1rem;
   }
 /* 
   .forecastGridHeader > :first-child{
