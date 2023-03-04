@@ -73,7 +73,7 @@ function App() {
             </h1>
             <div className="weatherGroup">
               <img
-                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                src={`https://openweathermap.org/img/wn/${weatherData?.icon}@2x.png`}
                 alt={`${weatherData.weather} icon`}
               />
               <div className="weatherGroupText">

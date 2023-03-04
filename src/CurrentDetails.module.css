@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  margin-top: 1rem;
 }
 
 .currentDetails > * {
@@ -22,17 +21,21 @@
 }
 
 svg {
-  transform: scale(1.5);
+  transform: scale(1.4);
   margin-bottom: 0.5rem;
 }
 
 /* When the browser is less than 639px wide */
 @media screen and (max-width: 639px) {
   .currentDetails {
-    gap: 0.25rem;
-    margin-top: 0;
+    gap: 0.2rem;
+    margin:.2rem;
+  }
+  .currentDetails > * {
+    padding: .55rem;
   }
   svg {
     transform: scale(1);
+    margin-bottom: 0.2rem;
   }
 }

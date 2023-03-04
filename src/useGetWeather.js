@@ -41,7 +41,7 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         }
 
         let weatherData = await response2.json();
-        console.log(weatherData);
+        // console.log(weatherData);
 
         //get 5 day / 3 hour forcast data
         //https://openweathermap.org/forecast5

@@ -36,7 +36,6 @@ export default function Forecast({ forecast, metric }) {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         className="feather feather-raindroplet"
-                        style={{ transform: "translateY(4px)" }}
                       >
                         <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
                       </svg>
@@ -52,13 +51,13 @@ export default function Forecast({ forecast, metric }) {
                   </div>
                 )}
               </div>
-              <div className="lowColumn" style={{ justifySelf: "center" }}>
+              <div className="lowColumn">
                 <h5>{metric ? day[1].minTempC : day[1].minTempF}</h5>
               </div>
-              <div className="avgColumn" style={{ justifySelf: "center" }}>
+              <div className="avgColumn">
                 <h5>{metric ? day[1].avgTempC : day[1].avgTempF}</h5>
               </div>
-              <div className="highColumn" style={{ justifySelf: "center" }}>
+              <div className="highColumn">
                 <h5>{metric ? day[1].maxTempC : day[1].maxTempF}</h5>
               </div>
             </div>

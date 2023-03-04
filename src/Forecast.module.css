@@ -2,6 +2,7 @@
   background-color: var(--stormtrans);
   padding: 0 0.5rem 0.5rem 0.5rem;
   border-radius: 1rem;
+  margin-bottom: 2rem;
 }
 
 .forecastGrid,
@@ -15,7 +16,7 @@
 .forecastGridHeader {
   border-bottom: 1px solid var(--storm);
   margin: 1rem 0 0 0;
-  height: 60px;
+  height: 50px;
 }
 
 .forecastColumn {
@@ -30,13 +31,17 @@
   grid-template-rows: 60% 40%;
   justify-items: center;
   position: relative;
-  height: 60px;
+  height: 50px;
 }
 
 .chanceOfRain {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.chanceOfRain svg {
+  transform: translateY(4px);
 }
 
 .normalIcon {
@@ -46,4 +51,26 @@
 .shrunkIcon {
   height: 3rem;
   transform: translateY(-4px);
+}
+
+.lowColumn, .avgColumn, .highColumn {
+ justify-self:  left;
+}
+
+/* When the browser is less than 639px wide */
+@media screen and (max-width: 639px) {
+  .forecastWrapper {
+    margin: 0 .2rem 2rem .2rem;
+  }
+  .forecastGridHeader {
+    margin-top: .2rem;
+  }
+/* 
+  .forecastGridHeader > :first-child{
+    padding-left: 0.5rem !important;
+  } */
+  .chanceOfRain svg {
+    transform: translateY(1.75px);
+  }
+
 }
