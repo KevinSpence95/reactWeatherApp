@@ -7,12 +7,15 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
   const [weatherData, setWeatherData] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function getWeather() {
       try {
         //get lat and lon coordinates of city, state/CC
         //https://openweathermap.org/api/geocoding-api
         let response = await fetch(
-          `https://api.openweathermap.org/geo/1.0/direct?q=${city},${stateNameOrCountryCode}&limit=1&appid=${APIKEY}`
+          `https://api.openweathermap.org/geo/1.0/direct?q=${city},${stateNameOrCountryCode}&limit=1&appid=${APIKEY}`,
+          { signal: controller.signal }
         );
 
         if (!response.ok) {
@@ -31,7 +34,8 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         //get current weather data
         //https://openweathermap.org/current
         let response2 = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${APIKEY}`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${APIKEY}`,
+          { signal: controller.signal }
         );
 
         if (!response2.ok) {
@@ -46,7 +50,8 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         //get 5 day / 3 hour forcast data
         //https://openweathermap.org/forecast5
         let response3 = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${coords.lat}&lon=${coords.lon}&appid=${APIKEY}`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${coords.lat}&lon=${coords.lon}&appid=${APIKEY}`,
+          { signal: controller.signal }
         );
 
         if (!response3.ok) {
@@ -258,6 +263,8 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
       }
     }
     getWeather();
+
+    return () => controller.abort();
   }, [city, stateNameOrCountryCode]);
 
   return weatherData;
