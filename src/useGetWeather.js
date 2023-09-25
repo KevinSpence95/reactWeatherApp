@@ -5,6 +5,7 @@ import { CtoF, getWeekDay, findMode } from "./helperFunctions";
 //Custom hook that fetches weather data for the app by location
 export default function useGetWeather(city, stateNameOrCountryCode = "") {
   const [weatherData, setWeatherData] = useState("");
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const controller = new AbortController();
@@ -258,6 +259,8 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
         };
         console.log(weather);
         setWeatherData(weather);
+
+        setLoading(false)
       } catch (e) {
         console.log(e);
       }
@@ -267,5 +270,5 @@ export default function useGetWeather(city, stateNameOrCountryCode = "") {
     return () => controller.abort();
   }, [city, stateNameOrCountryCode]);
 
-  return weatherData;
+  return {weatherData, loading}
 }

@@ -27,8 +27,13 @@ function App() {
     }
   }
 
-  let weatherData = useGetWeather(...location);
+  let {weatherData, loading} = useGetWeather(...location);
 
+  if(loading) {
+    return (
+      <h1>LOADING...</h1>
+    )
+  }
   return (
     <div
       className={`${!weatherData.daytime && "night"}`}
